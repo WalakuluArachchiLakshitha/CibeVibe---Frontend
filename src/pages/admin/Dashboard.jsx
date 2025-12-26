@@ -6,11 +6,12 @@ import {
   UsersIcon,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { dummyDashboardData } from "../../assets/assets";
 import Loading from "../../components/Loading";
 import { Title } from "../../components/admin/Title";
 import { BlurCircle } from "../../components/BlurCircle";
 import { DateFormat } from "../../lib/DateFormat";
+import api from "../../lib/axios";
+import toast from "react-hot-toast";
 
 export const Dashboard = () => {
   const currency = import.meta.env.VITE_CURRENCY;
@@ -32,7 +33,7 @@ export const Dashboard = () => {
     },
     {
       title: "Total Revenue",
-      value: currency + dashboardData.totalRevenue || "0",
+      value: currency + " " + (dashboardData.totalRevenue || "0"),
       icon: CircleDollarSignIcon,
     },
     {
@@ -48,8 +49,23 @@ export const Dashboard = () => {
   ];
 
   const fetchDashboardData = async () => {
-    setDashboardData(dummyDashboardData);
-    setLoading(false);
+    try {
+      const response = await api.get('/analytics/dashboard');
+      if (response.data.success) {
+        setDashboardData({
+          totalBookings: response.data.stats.totalBookings,
+          totalRevenue: response.data.stats.totalRevenue,
+          activeShows: response.data.stats.upcomingShows || [],
+          totalUser: response.data.stats.totalUsers
+        });
+      } else {
+        toast.error("Failed to load dashboard data");
+      }
+      setLoading(false);
+    } catch {
+      toast.error("Error loading dashboard");
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -77,31 +93,31 @@ export const Dashboard = () => {
         </div>
       </div>
 
-    <p className="mt-10 text-gray font-medium"> Action Shows </p>
-    <div className="relative flex flex-wrap gap-6 mt-4 max-w-5xl">
+      <p className="mt-10 text-gray font-medium"> Action Shows </p>
+      <div className="relative flex flex-wrap gap-6 mt-4 max-w-5xl">
         <BlurCircle top="100px" left="-10px" />
         {dashboardData.activeShows.map((show) => (
-            <div key={show._id} className="w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300">
-              <img src={show.movie.poster_path} alt="" className="h-60 w-full object-cover"/>
-               <p className="font-medium p-2 truncate">{show.movie.title}</p>
-               <div className="flex items-center justify-between px-2">
-                  <p className="text-lg font-medium">{currency} {show.showPrice}</p>
-                  <p className="flex items-center gap-1 text-sm text-gray-400 mt-1 pr-1">
+          <div key={show._id} className="w-55 rounded-lg overflow-hidden h-full pb-3 bg-primary/10 border border-primary/20 hover:-translate-y-1 transition duration-300">
+            <img src={show.movie.poster_path} alt="" className="h-60 w-full object-cover" />
+            <p className="font-medium p-2 truncate">{show.movie.title}</p>
+            <div className="flex items-center justify-between px-2">
+              <p className="text-lg font-medium">{currency} {show.showPrice}</p>
+              <p className="flex items-center gap-1 text-sm text-gray-400 mt-1 pr-1">
 
-                    <StarIcon className="w-4 h-4 text-primary fill-primary" />
-                    {show.movie.vote_average.toFixed(1)}
+                <StarIcon className="w-4 h-4 text-primary fill-primary" />
+                {show.movie.vote_average.toFixed(1)}
 
-                  </p>
-                  </div>
-                  <p className="px-2 pt-2 text-sm text-gray-500">
-                    {DateFormat(show.showDateTime)}
-                  </p>
-            
-                    
-            
+              </p>
             </div>
-          ))}
-    </div>
+            <p className="px-2 pt-2 text-sm text-gray-500">
+              {DateFormat(show.showDateTime)}
+            </p>
+
+
+
+          </div>
+        ))}
+      </div>
 
     </>
   ) : (

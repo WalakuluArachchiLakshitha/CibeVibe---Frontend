@@ -7,40 +7,61 @@ import Movies from "./pages/Movies.jsx";
 import SeatLayout from "./pages/SeatLayout.jsx";
 import Favorite from "./pages/Favorite.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
-import {Toaster} from 'react-hot-toast';
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Payment from "./pages/Payment.jsx";
+import { Toaster } from 'react-hot-toast';
 import Footer from "./components/Footer.jsx";
 import { AddShows } from "./pages/admin/AddShows.jsx";
 import { ListBookings } from "./pages/admin/ListBookings.jsx";
 import { ListShows } from "./pages/admin/ListShows.jsx";
 import { Layout } from "./pages/admin/Layout.jsx";
 import { Dashboard } from "./pages/admin/Dashboard.jsx";
+import { AddMovies } from "./pages/admin/addMovies.jsx";
+import { ListMovies } from "./pages/admin/ListMovies.jsx";
+import { UpdateMovies } from "./pages/admin/updateMovies.jsx";
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+import ProtectedAdminRoute from "./components/admin/ProtectedAdminRoute.jsx";
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith("/admin");
 
   return (
-    <div>
-      <>
+    <div className='min-h-screen bg-black text-white font-outfit'>
       <Toaster />
-        {!isAdminRoute && <Navbar />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies/:id" element={<MovieDetails />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:id/:date" element={<SeatLayout />} />
-          <Route path="/favorites" element={<Favorite />} />
-          <Route path="/my-bookings" element={<MyBookings />} />
-          
+      {!isAdminRoute && <Navbar />}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/seat-layout/:id" element={<SeatLayout />} />
+
+        {/* User Protected Routes */}
+        <Route path="/favorites" element={<Favorite />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/payment" element={<Payment />} />
+
+        {/* Public Admin Login */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected Admin Routes */}
+        <Route element={<ProtectedAdminRoute />}>
           <Route path='/admin/*' element={<Layout />}>
             <Route index element={<Dashboard />} />
+            <Route path="add-movies" element={<AddMovies />} />
+            <Route path="list-movies" element={<ListMovies />} />
             <Route path="add-shows" element={<AddShows />} />
-            <Route path="list-bookings" element={<ListBookings />} />
             <Route path="list-shows" element={<ListShows />} />
+            <Route path="list-bookings" element={<ListBookings />} />
+            <Route path="update-movies/:id" element={<UpdateMovies />} />
           </Route>
-        </Routes>
+        </Route>
 
-        {!isAdminRoute && <Footer />}
-      </>
+      </Routes>
+      {!isAdminRoute && <Footer />}
     </div>
   );
 };

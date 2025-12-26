@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { dummyDateTimeData, dummyShowsData } from "../assets/assets";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Loading from "../components/Loading";
-import { ClockIcon,ArrowRightIcon } from "lucide-react";
+import { ClockIcon, ArrowRightIcon } from "lucide-react";
 import isoTimeFormat from "../lib/isoTimeFormat";
 import { BlurCircle } from "../components/BlurCircle";
 import { assets } from "../assets/assets";
 import { toast } from "react-hot-toast";
+import api from '../lib/axios';
 
 const SeatLayout = () => {
   const groupRows = [
@@ -17,24 +16,63 @@ const SeatLayout = () => {
     ["G", "H"],
     ["I", "J"],
   ];
-  const { id, date } = useParams();
+  const { id } = useParams(); // movieId
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const selectedDate = searchParams.get('date');
+
   const navigate = useNavigate();
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
   const [show, setShow] = useState(null);
 
   const getshow = async () => {
-    const show = dummyShowsData.find((show) => show._id === id);
-    if (show) {
-      setShow({
-        movie: show,
-        dateTime: dummyDateTimeData,
-      });
+    try {
+      const response = await api.get(`/show/list?movieId=${id}`); // Expects id to be movieId
+      if (response.data.success && response.data.shows.length > 0) {
+        const shows = response.data.shows;
+        const movieData = shows[0].movie; // All shows are for same movie
+
+        // Group by Date
+        const dateTimeMap = {};
+
+        shows.forEach(show => {
+          const dateObj = new Date(show.showDateTime);
+          // Adjust dateStr to match how we handle dates
+          const formattedDate = dateObj.toISOString().split('T')[0];
+
+          if (!dateTimeMap[formattedDate]) {
+            dateTimeMap[formattedDate] = [];
+          }
+          dateTimeMap[formattedDate].push({
+            time: show.showDateTime, // Keep full string for sorting/logic
+            showId: show._id,
+            occupiedSeats: show.occupiedSeats || {},
+            price: show.showPrice
+          });
+        });
+
+        setShow({
+          movie: movieData,
+          dateTime: dateTimeMap,
+          allShows: shows // Keep ref
+        });
+      } else {
+        toast.error("No shows found for this movie");
+      }
+    } catch {
+      toast.error("Error fetching shows");
     }
   };
+
   const handleSeatClick = (seatId) => {
     if (!selectedTime) {
       return toast("Please select time first");
+    }
+
+    // Check availability
+    if (selectedTime.occupiedSeats && selectedTime.occupiedSeats[seatId]) {
+      return toast("Seat already booked");
     }
 
     if (!selectedSeats.includes(seatId) && selectedSeats.length > 4) {
@@ -47,18 +85,27 @@ const SeatLayout = () => {
         : [...prev, seatId]
     );
   };
+
   const renderSeats = (row, count = 9) => (
     <div key={row} className="flex gap-2 mt-2">
       <div className="flex flex-wrap items-center justify-center gap-2">
         {Array.from({ length: count }, (_, i) => {
           const seatId = `${row}${i + 1}`;
+
+          let isOccupied = false;
+          if (selectedTime && selectedTime.occupiedSeats && selectedTime.occupiedSeats[seatId]) {
+            isOccupied = true;
+          }
+
           return (
             <button
               key={seatId}
               onClick={() => handleSeatClick(seatId)}
-              className={`h-8 w-8 rounded border border-primary/60 cursor-pointer ${
-                selectedSeats.includes(seatId) && "bg-primary text-white"
-              }`}
+              disabled={isOccupied}
+              className={`h-8 w-8 rounded border border-primary/60 cursor-pointer 
+                 ${selectedSeats.includes(seatId) ? "bg-primary text-white" : ""}
+                 ${isOccupied ? "bg-gray-600 border-gray-600 cursor-not-allowed opacity-50" : ""}
+              `}
             >
               {seatId}
             </button>
@@ -67,6 +114,7 @@ const SeatLayout = () => {
       </div>
     </div>
   );
+
   useEffect(() => {
     getshow();
   }, []);
@@ -77,20 +125,23 @@ const SeatLayout = () => {
       <div className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10 h-max md:sticky md:top-30">
         <p className="text-lg font-semibold px-8">Available Timings</p>
         <div className="mt-5 space-y-1">
-          {show.dateTime[date].map((item) => (
-            <div
-              key={item.time}
-              onClick={() => setSelectedTime(item)}
-              className={`flex items-center gap-2 px-6 py-3 pl-10 w-max rounded-r-md cursor-pointer transition ${
-                selectedTime?.time === item.time
+          {show.dateTime[selectedDate] ? (
+            show.dateTime[selectedDate].map((item) => (
+              <div
+                key={item.time}
+                onClick={() => setSelectedTime(item)}
+                className={`flex items-center gap-2 px-6 py-3 pl-10 w-max rounded-r-md cursor-pointer transition ${selectedTime?.time === item.time
                   ? "bg-primary text-white"
                   : "hover:bg-primary/20"
-              }`}
-            >
-              <ClockIcon className="w-4 h-4" />
-              <p className="text-sm">{isoTimeFormat(item.time)}</p>
-            </div>
-          ))}
+                  }`}
+              >
+                <ClockIcon className="w-4 h-4" />
+                <p className="text-sm">{isoTimeFormat(item.time)}</p>
+              </div>
+            ))
+          ) : (
+            <p className="px-8 text-sm text-gray-400">No shows available for this date.</p>
+          )}
         </div>
       </div>
 
@@ -113,7 +164,13 @@ const SeatLayout = () => {
           </div>
         </div>
         <button
-          onClick={() => navigate("/my-bookings")}
+          onClick={() => {
+            if (selectedSeats.length === 0) return toast("Please select at least one seat");
+            if (!selectedTime) return toast("Please select a time slot");
+            const pricePerTicket = selectedTime.price;
+            const totalPrice = selectedSeats.length * pricePerTicket;
+            navigate("/payment", { state: { movie: show.movie, selectedSeats, selectedTime, totalPrice, showId: selectedTime.showId } });
+          }}
           className="flex items-center gap-1 mt-20 px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer active:scale-95"
         >
           Proceed to Checkout

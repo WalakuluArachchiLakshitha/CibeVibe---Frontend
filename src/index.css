@@ -5,28 +5,76 @@
 @theme{
   --color-primary: #F84565;
   --color-primary-dull: #d63854;
-  
 }
-*{
+
+:root {
+  color-scheme: dark;
+}
+
+* {
     font-family: "Outfit", sans-serif;
     scrollbar-width: thin;
-    scrollbar-color: #787777 #1e1e1e
+    scrollbar-color: #333 #121212;
 }
 
-body{
-  color:white;
-  background-color: #121212;
+html {
+  scroll-behavior: smooth;
 }
 
-.no-scrollbar{
+body {
+  color: #ffffff;
+  background-color: #0f0f0f; /* Slightly darker for more depth */
+  overflow-x: hidden;
+}
+
+.no-scrollbar {
   scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F84565;
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
+input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+  margin: 0;
 }
 
-::-webkit-calender-picker-indicator{
+::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+/* Glass Utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(30, 30, 30, 0.6) 0%, rgba(18, 18, 18, 0.4) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }

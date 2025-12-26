@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // Import your Publishable Key
   const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -17,7 +17,9 @@ import { ClerkProvider } from '@clerk/clerk-react'
 createRoot(document.getElementById('root')).render( 
   <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <BrowserRouter>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <App />
+      </GoogleOAuthProvider>
     </BrowserRouter>
   </ClerkProvider>
 )

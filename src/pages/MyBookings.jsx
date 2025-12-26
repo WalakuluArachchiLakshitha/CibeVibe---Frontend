@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import { dummyBookingData } from "../assets/assets";
 import { useState } from "react";
 import Loading from "../components/Loading";
 import { BlurCircle } from "../components/BlurCircle";
 import timeFormat from "../lib/timeFormat";
 import { DateFormat } from "../lib/DateFormat";
+import api from "../lib/axios";
+import toast from "react-hot-toast";
 
 const MyBookings = () => {
   const currency = import.meta.env.VITE_CURRENCY;
@@ -13,8 +14,30 @@ const MyBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getMyBookings = async () => {
-    setBookings(dummyBookingData);
-    setIsLoading(false);
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user || !user._id) {
+        toast.error("Please login to view bookings");
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await api.post('/booking/my-bookings', { userId: user._id });
+      if (response.data.success) {
+        // Transform bookedSeats object to array for display
+        const transformedBookings = response.data.bookings.map(booking => ({
+          ...booking,
+          bookedSeats: Object.keys(booking.bookedSeats)
+        }));
+        setBookings(transformedBookings);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch {
+      toast.error("Failed to fetch bookings");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -30,55 +53,66 @@ const MyBookings = () => {
 
       <h1 className="text-lg font-semibold mb-4">My Bookings</h1>
 
-      {bookings.map((item, index) => (
-        <div
-          key={index}
-          className="flex flex-col md:flex-row justify-between bg-primary/8 border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl"
-        >
-          <div className="flex flex-col md:flex-row">
-            <img
-              src={item.show.movie.poster_path}
-              alt=""
-              className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
-            />
-            <div className="flex flex-col p-4">
-              <p className="text-lg font-semibold">{item.show.movie.title}</p>
-              <p className="text-gray-400 text-sm">
-                {timeFormat(item.show.movie.runtime)}
-              </p>
-              <p className="text-gray-400 text-sm mt-auto">
-                {DateFormat(item.show.showDateTime)}
-              </p>
+      {bookings.length > 0 ? (
+        bookings.map((item, index) => (
+          <div
+            key={index}
+            className="flex flex-col md:flex-row justify-between bg-primary/8 border border-primary/20 rounded-lg mt-4 p-2 max-w-3xl"
+          >
+            <div className="flex flex-col md:flex-row">
+              <img
+                src={item.show?.movie?.poster_path || '/placeholder.jpg'}
+                alt={item.show?.movie?.title || 'Movie'}
+                className="md:max-w-45 aspect-video h-auto object-cover object-bottom rounded"
+              />
+              <div className="flex flex-col p-4">
+                <p className="text-lg font-semibold">
+                  {item.show?.movie?.title || 'Show Unavailable'}
+                </p>
+                {item.show?.movie?.runtime && (
+                  <p className="text-gray-400 text-sm">
+                    {timeFormat(item.show.movie.runtime)}
+                  </p>
+                )}
+                {item.show?.showDateTime && (
+                  <p className="text-gray-400 text-sm mt-auto">
+                    {DateFormat(item.show.showDateTime)}
+                  </p>
+                )}
+                {!item.show && (
+                  <p className="text-red-400 text-sm mt-2">
+                    This show has been removed
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex flex-col md:items-end md:text-right justify-between p-4">
+              <div className="flex items-center gap-4">
+                <p className="text-2xl font-semibold mb-3">
+                  {currency}
+                  {item.amount}
+                </p>
+              </div>
+              <div className="text-sm">
+                <p>
+                  <span className="text-gray-400">Total Tickets:</span>{" "}
+                  {item.bookedSeats.length}
+                </p>
+                <p>
+                  <span className="text-gray-400">Seat Number:</span>{" "}
+                  {item.bookedSeats.join(", ")}
+                </p>
+              </div>
             </div>
           </div>
-
-
-
-          <div className="flex flex-col md:items-end md:text-right justify-between p-4">
-            <div className="flex items-center gap-4">
-              <p className="text-2xl font-semibold mb-3">
-                {currency}
-                {item.amount}
-              </p>
-              {!item.isPaid && (
-                <button className="bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer">
-                  Pay Now
-                </button>
-              )}
-            </div>
-            <div className="text-sm">
-              <p>
-                <span className="text-gray-400">Total Tickets:</span>{" "}
-                {item.bookedSeats.length}
-              </p>
-              <p>
-                <span className="text-gray-400">Seat Number:</span>{" "}
-                {item.bookedSeats.join(", ")}
-              </p>
-            </div>
-          </div>
+        ))
+      ) : (
+        <div className="text-center py-12 text-gray-400">
+          <p className="text-lg">No bookings found</p>
+          <p className="text-sm mt-2">Start booking your favorite movies!</p>
         </div>
-      ))}
+      )}
     </div>
   ) : (
     <Loading />

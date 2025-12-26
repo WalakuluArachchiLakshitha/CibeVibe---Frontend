@@ -28,7 +28,7 @@ const Footer = () => {
                     <div>
                         <h2 className="font-semibold text-white mb-5 uppercase tracking-wider text-sm">Support</h2>
                         <div className="text-sm space-y-3 text-gray-400">
-                            <p>+1-234-567-890</p>
+                            <p>0112 322 422</p>
                             <p>support@cinevibe.com</p>
                         </div>
                     </div>

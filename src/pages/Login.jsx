@@ -4,7 +4,6 @@ import { assets } from '../assets/assets';
 import api from '../lib/axios';
 import toast from 'react-hot-toast';
 import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -47,8 +46,8 @@ const Login = () => {
     const googleLogin = useGoogleLogin({
         onSuccess: async (response) => {
             try {
-                const res = await axios.post(
-                    `${import.meta.env.VITE_API_URL}/auth/google-login`,
+                const res = await api.post(
+                    '/auth/google-login',
                     { token: response.access_token }
                 );
 

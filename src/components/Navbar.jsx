@@ -93,7 +93,7 @@ const Navbar = () => {
         <div className="flex relative items-center justify-between px-6 md:px-16 lg:px-36 py-5">
 
           {/* Logo */}
-          <Link to="/" className="shrink-0">
+          <Link to="/" onClick={() => scrollTo(0, 0)} className="shrink-0">
             <img src={assets.logo} alt="CineVibe" className="h-28 w-auto  absolute top-2 left-20" />
           </Link>
 
@@ -114,14 +114,14 @@ const Navbar = () => {
               Movies
             </Link>
             <Link
-              to="/"
+              to="/theaters"
               onClick={() => scrollTo(0, 0)}
               className="hover:text-yellow-400 transition-colors text-xl"
             >
               Theaters
             </Link>
             <Link
-              to="/"
+              to="/about"
               onClick={() => scrollTo(0, 0)}
               className="hover:text-yellow-400 transition-colors text-xl"
             >
@@ -204,7 +204,7 @@ const Navbar = () => {
             ) : (
               <Link to="/login" className="hidden md:block">
                 <button className="px-8 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-md transition-all text-base">
-                  Login
+                  Sign In
                 </button>
               </Link>
             )}
@@ -349,7 +349,7 @@ const Navbar = () => {
                           {movie.title}
                         </h3>
                         <p className="text-xs text-gray-400 mt-1">
-                          {new Date(movie.release_date).getFullYear()} • {movie.genres?.slice(0, 2).join(", ")}
+                          {new Date(movie.release_date).getFullYear()} ï¿½ {movie.genres?.slice(0, 2).join(", ")}
                         </p>
                         <p className="text-xs text-gray-500 mt-1 line-clamp-2">
                           {movie.overview}

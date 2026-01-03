@@ -51,7 +51,12 @@ const Payment = () => {
             const response = await api.post('/booking/create', bookingData);
             if (response.data.success) {
                 toast.success("Payment Successful! Booking Confirmed.");
-                navigate('/my-bookings');
+                navigate('/booking-success', {
+                    state: {
+                        booking: response.data.booking,
+                        ...location.state
+                    }
+                });
             } else {
                 toast.error(response.data.message);
             }

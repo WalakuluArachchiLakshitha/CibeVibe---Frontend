@@ -10,6 +10,9 @@ import MyBookings from "./pages/MyBookings.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Payment from "./pages/Payment.jsx";
+import BookingSuccess from "./pages/BookingSuccess.jsx";
+import Theaters from "./pages/Theaters.jsx";
+import AboutUs from "./pages/AboutUs.jsx";
 import { Toaster } from 'react-hot-toast';
 import Footer from "./components/Footer.jsx";
 import { AddShows } from "./pages/admin/AddShows.jsx";
@@ -36,6 +39,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/movies" element={<Movies />} />
+        <Route path="/theaters" element={<Theaters />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/seat-layout/:id" element={<SeatLayout />} />
 
@@ -43,6 +48,7 @@ const App = () => {
         <Route path="/favorites" element={<Favorite />} />
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/booking-success" element={<BookingSuccess />} />
 
         {/* Public Admin Login */}
         <Route path="/admin/login" element={<AdminLogin />} />

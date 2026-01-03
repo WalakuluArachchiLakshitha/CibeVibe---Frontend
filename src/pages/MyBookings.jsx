@@ -7,11 +7,16 @@ import { DateFormat } from "../lib/DateFormat";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 
+import { QRCodeCanvas } from 'qrcode.react';
+import { XIcon, QrCodeIcon } from 'lucide-react';
+
 const MyBookings = () => {
   const currency = import.meta.env.VITE_CURRENCY;
 
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedBookingQr, setSelectedBookingQr] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
 
   const getMyBookings = async () => {
     try {
@@ -104,6 +109,26 @@ const MyBookings = () => {
                   {item.bookedSeats.join(", ")}
                 </p>
               </div>
+
+              <button
+                onClick={() => {
+                  const user = JSON.parse(localStorage.getItem('user'));
+                  const qrData = JSON.stringify({
+                    bookingID: item._id,
+                    email: user?.email || "N/A",
+                    title: item.show?.movie?.title || "N/A",
+                    showdatetime: item.show?.showDateTime ? DateFormat(item.show.showDateTime) : "N/A",
+                    seatbooked: item.bookedSeats.join(', '),
+                    amount: item.amount
+                  });
+                  setSelectedBookingQr(qrData);
+                  setShowQrModal(true);
+                }}
+                className="mt-4 flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm transition"
+              >
+                <QrCodeIcon className="w-4 h-4" />
+                View QR Ticket
+              </button>
             </div>
           </div>
         ))
@@ -111,6 +136,36 @@ const MyBookings = () => {
         <div className="text-center py-12 text-gray-400">
           <p className="text-lg">No bookings found</p>
           <p className="text-sm mt-2">Start booking your favorite movies!</p>
+        </div>
+      )}
+
+      {/* QR Code Modal */}
+      {showQrModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={() => setShowQrModal(false)}>
+          <div className="bg-[#1a1a1a] p-8 rounded-2xl border border-white/10 max-w-sm w-full relative" onClick={e => e.stopPropagation()}>
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
+            >
+              <XIcon className="w-6 h-6" />
+            </button>
+
+            <h3 className="text-xl font-bold mb-6 text-center">Ticket QR Code</h3>
+
+            <div className="flex justify-center bg-white p-4 rounded-xl mb-4">
+              <QRCodeCanvas
+                value={selectedBookingQr}
+                size={200}
+                bgColor={"#ffffff"}
+                fgColor={"#000000"}
+                level={"H"}
+              />
+            </div>
+
+            <p className="text-center text-gray-400 text-sm">
+              Show this QR code at the cinema entrance
+            </p>
+          </div>
         </div>
       )}
     </div>

@@ -29,7 +29,7 @@ const MyBookings = () => {
 
       const response = await api.post('/booking/my-bookings', { userId: user._id });
       if (response.data.success) {
-        // Transform bookedSeats object to array for display
+        
         const transformedBookings = response.data.bookings.map(booking => ({
           ...booking,
           bookedSeats: Object.keys(booking.bookedSeats)
@@ -139,7 +139,7 @@ const MyBookings = () => {
         </div>
       )}
 
-      {/* QR Code Modal */}
+   
       {showQrModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={() => setShowQrModal(false)}>
           <div className="bg-[#1a1a1a] p-8 rounded-2xl border border-white/10 max-w-sm w-full relative" onClick={e => e.stopPropagation()}>

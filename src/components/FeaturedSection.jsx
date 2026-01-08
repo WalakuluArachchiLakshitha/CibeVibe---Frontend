@@ -13,7 +13,7 @@ export const FeaturedSection = () => {
     try {
       const response = await api.get('/movie/list');
       if (response.data.success) {
-        // Show first 6 movies
+        
         setMovies(response.data.movies.slice(0, 6));
       }
     } catch {
@@ -36,7 +36,7 @@ export const FeaturedSection = () => {
         </button>
       </div>
 
-      {/* This is the magic part for horizontal layout */}
+    
       <div className="flex overflow-x-auto gap-6 no-scrollbar pb-4">
         {movies.map((movie) => (
           <MovieCard key={movie._id} movie={movie} /> //

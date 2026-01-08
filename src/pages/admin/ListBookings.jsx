@@ -30,7 +30,7 @@ export const ListBookings = () => {
 
   const handleEdit = (id) => {
     toast.info("Edit functionality coming soon!");
-    // TODO: Implement edit booking functionality
+    
   };
 
   const handleDelete = async (id) => {
@@ -52,7 +52,7 @@ export const ListBookings = () => {
   return !isLoading ? (
     <div className="w-full">
       <Title text1="List" text2="Bookings" />
-      {/* Add horizontal scroll container for mobile */}
+     
       <div className="mt-8 overflow-x-auto">
         <div className="min-w-[640px] rounded-xl border border-white/5">
           <table className="w-full text-left border-collapse">

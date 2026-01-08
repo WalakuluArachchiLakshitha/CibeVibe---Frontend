@@ -44,7 +44,7 @@ export const ListShows = () => {
 
   const handleEdit = (showId) => {
     toast("Edit functionality coming soon!");
-    // navigate(`/admin/update-show/${showId}`);
+    navigate(`/admin/update-show/${showId}`);
   };
 
   useEffect(() => {

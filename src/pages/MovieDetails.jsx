@@ -22,7 +22,7 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchMovieAndShows = async () => {
       try {
-        // Fetch movie details
+      
         const movieResponse = await api.get(`/movie/single/${id}`);
         if (movieResponse.data.success) {
           setMovie(movieResponse.data.movie);
@@ -32,12 +32,12 @@ const MovieDetails = () => {
           return;
         }
 
-        // Fetch shows for this movie
+      
         const showsResponse = await api.get(`/show/list?movieId=${id}`);
         if (showsResponse.data.success && showsResponse.data.shows.length > 0) {
           setShows(showsResponse.data.shows);
 
-          // Group shows by date
+          
           const dateTimeMap = {};
           showsResponse.data.shows.forEach(show => {
             const dateObj = new Date(show.showDateTime);
@@ -58,7 +58,7 @@ const MovieDetails = () => {
           setDateTimeData(dateTimeMap);
         }
 
-        // Fetch related movies (all movies for now)
+        
         const moviesResponse = await api.get('/movie/list');
         if (moviesResponse.data.success) {
           setRelatedMovies(moviesResponse.data.movies.filter(m => m._id !== id).slice(0, 4));
@@ -73,7 +73,7 @@ const MovieDetails = () => {
 
     fetchMovieAndShows();
 
-    // Check if movie is in favorites
+   
     const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
     setIsFavorite(favorites.includes(id));
   }, [id, navigate]);
@@ -132,13 +132,13 @@ const MovieDetails = () => {
               onClick={() => {
                 const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
                 if (isFavorite) {
-                  // Remove from favorites
+                
                   const updated = favorites.filter(favId => favId !== id);
                   localStorage.setItem('favorites', JSON.stringify(updated));
                   setIsFavorite(false);
                   toast.success('Removed from favorites');
                 } else {
-                  // Add to favorites
+                 
                   favorites.push(id);
                   localStorage.setItem('favorites', JSON.stringify(favorites));
                   setIsFavorite(true);

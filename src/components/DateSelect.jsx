@@ -9,7 +9,7 @@ const DateSelect = ({ dateTime, id }) => {
   const navigate = useNavigate();
 
   const onBookHandler = () => {
-    // Corrected logic: trigger toast if NOTHING is selected
+
     if (!selected) {
       return toast.error("Please select a date");
     }
@@ -19,10 +19,10 @@ const DateSelect = ({ dateTime, id }) => {
 
   return (
     <div id="dateSelect" className="pt-20 px-6 md:px-16 lg:px-36">
-      {/* Main Container with Glassmorphism effect */}
+    
       <div className="flex flex-col md:flex-row items-center justify-between gap-10 relative p-10 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md">
 
-        {/* Decorative Blurs */}
+      
         <div className="absolute inset-0 overflow-hidden rounded-xl -z-10">
           <BlurCircle top="-50px" right="-50px" />
         </div>
@@ -31,10 +31,10 @@ const DateSelect = ({ dateTime, id }) => {
           <p className="text-xl font-bold tracking-tight text-white mb-6">Choose Date</p>
 
           <div className="flex items-center gap-8 text-sm">
-            {/* Left Navigation */}
+           
             <ChevronLeftIcon className="cursor-pointer text-gray-400 hover:text-white transition-colors" width={24} />
 
-            {/* Date Selection Strip */}
+         
             <div className="flex items-center gap-6">
               {Object.keys(dateTime).map((date) => {
                 const dateObj = new Date(date);
@@ -60,12 +60,12 @@ const DateSelect = ({ dateTime, id }) => {
               })}
             </div>
 
-            {/* Right Navigation */}
+         
             <ChevronRightIcon className="cursor-pointer text-gray-400 hover:text-white transition-colors" width={24} />
           </div>
         </div>
 
-        {/* Action Button */}
+       
         <button
           onClick={onBookHandler}
           className="px-10 py-3.5 bg-primary hover:bg-primary/90 text-white transition-all rounded-lg font-bold text-lg shadow-lg active:scale-95"

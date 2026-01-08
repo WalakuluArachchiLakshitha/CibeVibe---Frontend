@@ -16,7 +16,7 @@ const SeatLayout = () => {
     ["G", "H"],
     ["I", "J"],
   ];
-  const { id } = useParams(); // movieId
+  const { id } = useParams(); 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const selectedDate = searchParams.get('date');
@@ -28,24 +28,24 @@ const SeatLayout = () => {
 
   const getshow = async () => {
     try {
-      const response = await api.get(`/show/list?movieId=${id}`); // Expects id to be movieId
+      const response = await api.get(`/show/list?movieId=${id}`); 
       if (response.data.success && response.data.shows.length > 0) {
         const shows = response.data.shows;
-        const movieData = shows[0].movie; // All shows are for same movie
+        const movieData = shows[0].movie; 
 
-        // Group by Date
+      
         const dateTimeMap = {};
 
         shows.forEach(show => {
           const dateObj = new Date(show.showDateTime);
-          // Adjust dateStr to match how we handle dates
+         
           const formattedDate = dateObj.toISOString().split('T')[0];
 
           if (!dateTimeMap[formattedDate]) {
             dateTimeMap[formattedDate] = [];
           }
           dateTimeMap[formattedDate].push({
-            time: show.showDateTime, // Keep full string for sorting/logic
+            time: show.showDateTime, 
             showId: show._id,
             occupiedSeats: show.occupiedSeats || {},
             price: show.showPrice
@@ -55,7 +55,7 @@ const SeatLayout = () => {
         setShow({
           movie: movieData,
           dateTime: dateTimeMap,
-          allShows: shows // Keep ref
+          allShows: shows 
         });
       } else {
         toast.error("No shows found for this movie");
@@ -70,7 +70,7 @@ const SeatLayout = () => {
       return toast("Please select time first");
     }
 
-    // Check availability
+  
     if (selectedTime.occupiedSeats && selectedTime.occupiedSeats[seatId]) {
       return toast("Seat already booked");
     }
@@ -121,7 +121,7 @@ const SeatLayout = () => {
 
   return show ? (
     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
-      {/* Left Section: Available Timings*/}
+      
       <div className="w-60 bg-primary/10 border border-primary/20 rounded-lg py-10 h-max md:sticky md:top-30">
         <p className="text-lg font-semibold px-8">Available Timings</p>
         <div className="mt-5 space-y-1">
@@ -145,7 +145,7 @@ const SeatLayout = () => {
         </div>
       </div>
 
-      {/* Seats Layout */}
+   
       <div className="relative flex-1 flex flex-col items-center max-md:mt-16">
         <BlurCircle top="-100px" left="-100px" />
         <BlurCircle bottom="0" right="0" />

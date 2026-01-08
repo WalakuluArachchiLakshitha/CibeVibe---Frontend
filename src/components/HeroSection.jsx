@@ -15,7 +15,7 @@ const HeroSection = () => {
       try {
         const response = await api.get('/movie/list');
         if (response.data.success && response.data.movies.length > 0) {
-          // Get first 5-8 movies for carousel
+          
           setMovies(response.data.movies.slice(0, 5));
         }
       } catch {
@@ -46,7 +46,7 @@ const HeroSection = () => {
     setTimeout(() => setIsTransitioning(false), 500);
   }, [isTransitioning, currentIndex]);
 
-  // Auto-rotate every 5 seconds
+ 
   useEffect(() => {
     if (movies.length === 0) return;
 
@@ -69,7 +69,7 @@ const HeroSection = () => {
 
   return (
     <div className="relative h-screen overflow-hidden">
-      {/* Background Images with Fade Transition */}
+   
       {movies.map((movie, index) => (
         <div
           key={movie._id}
@@ -81,12 +81,12 @@ const HeroSection = () => {
             backgroundPosition: 'center 20%'
           }}
         >
-          {/* Immersive Gradient Overlay */}
+         
           <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-black/70 to-black/50"></div>
         </div>
       ))}
 
-      {/* Content */}
+     
       <div className="relative z-10 h-full flex flex-col items-start justify-center gap-6 px-6 md:px-16 lg:px-36">
         <div
           key={currentIndex}
@@ -130,9 +130,9 @@ const HeroSection = () => {
           </button>
         </div>
 
-        {/* Navigation Controls */}
+        
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4">
-          {/* Navigation Dots */}
+          
           <div className="flex items-center gap-2">
             {movies.map((_, index) => (
               <button
@@ -147,7 +147,6 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Arrow Navigation */}
         <button
           onClick={handlePrev}
           className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full transition-all duration-300 hover:scale-110 border border-white/10"

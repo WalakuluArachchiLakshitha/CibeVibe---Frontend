@@ -13,7 +13,7 @@ const Payment = () => {
     const [loading, setLoading] = useState(false);
 
     if (!location.state) {
-        // Handle direct access or missing state
+        
         return (
             <div className="min-h-screen flex items-center justify-center text-white">
                 <div className="text-center">
@@ -80,7 +80,7 @@ const Payment = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
 
-                {/* Booking Summary */}
+           
                 <div className="space-y-6">
                     <Title text1="Booking" text2="Summary" />
 
@@ -105,7 +105,7 @@ const Payment = () => {
                                     <span>Date</span>
                                 </div>
                                 <span className="font-medium">{new Date().toLocaleDateString()}</span>
-                                {/* Note: Ideally pass exact date from SeatLayout if available, else using today/dummy */}
+                             
                             </div>
                             <div className="flex justify-between items-center text-gray-300">
                                 <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ const Payment = () => {
                     </div>
                 </div>
 
-                {/* Payment Form */}
+            
                 <div className="space-y-6">
                     <Title text1="Payment" text2="Details" />
 

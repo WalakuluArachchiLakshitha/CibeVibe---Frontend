@@ -67,16 +67,12 @@ export const AddShows = () => {
     if (!showPrice) return toast.error("Please enter a price");
     if (Object.keys(dateTimeSelection).length === 0) return toast.error("Please add at least one show time");
 
-    // Flatten logic: Backend expects array of shows or simple add per movie. 
-    // The current backend 'addShow' expects single movieId, showDateTime, showPrice.
-    // So we iterate and add multiple shows.
+  
     try {
       let successCount = 0;
       for (const [date, times] of Object.entries(dateTimeSelection)) {
         for (const time of times) {
-          // Construct Date object or string as expected by backend
-          // Backend expects showDateTime.
-          // We can send ISO string.
+          
           const showDateTime = new Date(`${date}T${time}`);
 
           const response = await api.post('/show/add', {
@@ -90,7 +86,7 @@ export const AddShows = () => {
 
       if (successCount > 0) {
         toast.success(`${successCount} Shows added successfully!`);
-        // Reset
+       
         setSelectedMovie(null);
         setShowPrice("");
         setDateTimeSelection({});
@@ -150,13 +146,13 @@ export const AddShows = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
 
-        {/* Show Price */}
+       
         <div className="space-y-4">
           <h3 className="text-xl font-medium text-gray-300">2. Set Price</h3>
           <div className="glass p-1 rounded-lg">
             <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
               <DollarSignIcon className="text-gray-400 w-5 h-5" />
-              {/* <span className="text-gray-400 text-sm">{currency}</span> */}
+           
               <input
                 min={0}
                 type="number"
@@ -169,7 +165,7 @@ export const AddShows = () => {
           </div>
         </div>
 
-        {/* Date & Time Selection */}
+       
         <div className="space-y-4">
           <h3 className="text-xl font-medium text-gray-300">3. Select Schedule</h3>
           <div className="glass p-1 rounded-lg">
@@ -194,7 +190,7 @@ export const AddShows = () => {
         </div>
       </div>
 
-      {/* Display Selected Times */}
+      
       {Object.keys(dateTimeSelection).length > 0 && (
         <div className="mt-8">
           <h3 className="text-xl font-medium mb-4 text-gray-300">Selected Schedule</h3>

@@ -88,16 +88,16 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Main Navbar */}
+      
       <nav className="fixed top-0 left-0 z-50 w-full backdrop-blur-md bg-black/30 border-b border-white/10 shadow-lg">
         <div className="flex relative items-center justify-between px-6 md:px-16 lg:px-36 py-5">
 
-          {/* Logo */}
+        
           <Link to="/" onClick={() => scrollTo(0, 0)} className="shrink-0">
             <img src={assets.logo} alt="CineVibe" className="h-28 w-auto  absolute top-2 left-20" />
           </Link>
 
-          {/* Desktop Navigation Links */}
+         
           <div className="hidden md:flex items-center gap-10 text-white text-base">
             <Link
               to="/"
@@ -136,9 +136,9 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Right Side - Search, User, Book Now */}
+        
           <div className="flex items-center gap-8 relative">
-            {/* Search Icon */}
+           
             <button
               onClick={() => setSearchOpen(true)}
               className="hidden md:block text-white hover:text-yellow-400 transition-colors text-4xl gap-10 absolute left-70"
@@ -146,7 +146,7 @@ const Navbar = () => {
               <SearchIcon className="w-6 h-6" />
             </button>
 
-            {/* User Profile or Login */}
+           
             {user ? (
               <div className="relative hidden md:block">
                 <div
@@ -209,7 +209,7 @@ const Navbar = () => {
               </Link>
             )}
 
-            {/* Mobile Menu Icon */}
+           
             <button
               className="md:hidden text-white"
               onClick={() => setIsOpen(!isOpen)}
@@ -219,7 +219,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+       
         <div
           className={`md:hidden absolute top-full left-0 w-full bg-[#0B1120] border-b border-white/5 overflow-y-auto transition-all duration-300 ${isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
             }`}
@@ -299,11 +299,11 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Search Modal */}
+      
       {searchOpen && (
         <div className="fixed inset-0 z-100 bg-black/80 backdrop-blur-sm flex items-start justify-center pt-20 px-4">
           <div className="w-full max-w-2xl bg-[#1A1A1A] rounded-2xl border border-white/10 shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-4">
-            {/* Search Input */}
+         
             <div className="p-4 border-b border-white/10">
               <div className="flex items-center gap-3">
                 <SearchIcon className="w-5 h-5 text-gray-400" />
@@ -325,7 +325,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* Search Results */}
+         
             <div className="max-h-125 overflow-y-auto">
               {searchQuery.trim() === "" ? (
                 <div className="p-8 text-center text-gray-400">

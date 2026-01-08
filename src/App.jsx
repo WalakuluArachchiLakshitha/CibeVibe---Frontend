@@ -44,16 +44,16 @@ const App = () => {
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/seat-layout/:id" element={<SeatLayout />} />
 
-        {/* User Protected Routes */}
+       
         <Route path="/favorites" element={<Favorite />} />
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/booking-success" element={<BookingSuccess />} />
 
-        {/* Public Admin Login */}
+        
         <Route path="/admin/login" element={<AdminLogin />} />
 
-        {/* Protected Admin Routes */}
+        
         <Route element={<ProtectedAdminRoute />}>
           <Route path='/admin/*' element={<Layout />}>
             <Route index element={<Dashboard />} />

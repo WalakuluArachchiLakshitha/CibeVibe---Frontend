@@ -16,7 +16,7 @@ const Movies = () => {
       }
       setLoading(false);
     } catch {
-      // Error fetching movies
+      
       setLoading(false);
     }
   };

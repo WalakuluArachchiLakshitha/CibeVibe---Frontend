@@ -12,7 +12,7 @@ const Favorite = () => {
 
   const fetchFavoriteMovies = useCallback(async () => {
     try {
-      // Get favorite movie IDs from localStorage
+    
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
       if (favorites.length === 0) {
@@ -20,7 +20,7 @@ const Favorite = () => {
         return;
       }
 
-      // Fetch all movies and filter by favorites
+   
       const response = await api.get('/movie/list');
       if (response.data.success) {
         const favMovies = response.data.movies.filter(movie =>

@@ -23,20 +23,20 @@ html {
 
 body {
   color: #ffffff;
-  background-color: #0f0f0f; /* Slightly darker for more depth */
+  background-color: #0f0f0f;
   overflow-x: hidden;
 }
 
 .no-scrollbar {
   scrollbar-width: none;
-  -ms-overflow-style: none; /* IE and Edge */
+  -ms-overflow-style: none;
 }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* Premium Scrollbar */
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -64,7 +64,7 @@ input::-webkit-inner-spin-button {
   filter: invert(1);
 }
 
-/* Glass Utilities */
+
 .glass {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);

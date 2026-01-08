@@ -75,7 +75,7 @@ const AboutUs = () => {
             <BlurCircle top="100px" left="100px" />
             <BlurCircle bottom="300px" right="50px" />
 
-            {/* Hero Section */}
+           
             <div className="text-center mb-16">
                 <Title text1="About" text2="CineVibe" />
                 <p className="text-gray-400 mt-4 max-w-3xl mx-auto text-lg">
@@ -85,7 +85,7 @@ const AboutUs = () => {
                 </p>
             </div>
 
-            {/* Stats Section */}
+       
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-20">
                 {stats.map((stat, index) => (
                     <div
@@ -101,7 +101,7 @@ const AboutUs = () => {
                 ))}
             </div>
 
-            {/* Story Section */}
+           
             <div className="max-w-4xl mx-auto mb-20">
                 <div className="glass p-8 md:p-12 rounded-2xl border border-white/10">
                     <h2 className="text-2xl font-bold mb-6 text-center">
@@ -130,7 +130,7 @@ const AboutUs = () => {
                 </div>
             </div>
 
-            {/* Values Section */}
+          
             <div className="mb-20">
                 <h2 className="text-2xl font-bold mb-10 text-center">
                     <span className="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
@@ -153,7 +153,7 @@ const AboutUs = () => {
                 </div>
             </div>
 
-            {/* Team Section */}
+            
             <div>
                 <h2 className="text-2xl font-bold mb-10 text-center">
                     <span className="bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">

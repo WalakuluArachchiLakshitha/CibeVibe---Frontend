@@ -72,13 +72,13 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
 
-            {/* Background */}
+          
             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
 
-            {/* Content */}
+          
             <div className="relative z-10 w-full max-w-md px-6">
 
-                {/* Logo */}
+             
                 <div className="text-center mb-8">
                     <Link to="/">
                         <img src={assets.logo} alt="CineVibe Logo" className="w-48 mx-auto" />
@@ -87,11 +87,11 @@ const Login = () => {
                     <p className="text-gray-400">Sign in to continue your movie journey</p>
                 </div>
 
-                {/* Form */}
+            
                 <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl text-white">
                     <form onSubmit={handleSubmit} className="space-y-6">
 
-                        {/* Email */}
+                      
                         <div>
                             <label className="text-sm">Email Address</label>
                             <input
@@ -105,7 +105,7 @@ const Login = () => {
                             />
                         </div>
 
-                        {/* Password */}
+                      
                         <div>
                             <label className="text-sm">Password</label>
                             <input
@@ -119,7 +119,7 @@ const Login = () => {
                             />
                         </div>
 
-                        {/* Remember Me */}
+                      
                         <div className="flex justify-between text-sm text-gray-300">
                             <label className="flex items-center gap-2">
                                 <input type="checkbox"
@@ -134,16 +134,16 @@ const Login = () => {
                             </Link>
                         </div>
 
-                        {/* Submit */}
+                       
                         <button className="w-full py-3 bg-primary rounded-lg font-semibold text-white">
                             Sign In
                         </button>
                     </form>
 
-                    {/* Divider */}
+                  
                     <div className="text-center my-6 text-gray-400 text-sm">OR</div>
 
-                    {/* Google Login */}
+                  
                     <button
                         onClick={googleLogin}
                         className="w-full py-3 bg-white text-black rounded-lg flex items-center justify-center gap-2"

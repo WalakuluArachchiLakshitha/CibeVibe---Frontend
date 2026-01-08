@@ -27,7 +27,7 @@ export const AdminSidebar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Get admin user from localStorage
+  
     try {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -65,7 +65,7 @@ export const AdminSidebar = () => {
 
   return (
     <>
-      {/* Mobile Menu Toggle Button */}
+     
       <button
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         className="md:hidden fixed top-20 left-4 z-50 p-2 bg-primary rounded-lg text-white shadow-lg"
@@ -73,7 +73,7 @@ export const AdminSidebar = () => {
         {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
-      {/* Overlay for mobile */}
+      
       {mobileMenuOpen && (
         <div
           className="md:hidden fixed inset-0 bg-black/50 z-40"
@@ -81,7 +81,7 @@ export const AdminSidebar = () => {
         />
       )}
 
-      {/* Sidebar */}
+    
       <div className={`
         fixed md:relative
         h-[calc(100vh-64px)] 
@@ -97,7 +97,7 @@ export const AdminSidebar = () => {
           : '-translate-x-full md:translate-x-0'
         }
       `}>
-        {/* Profile Section */}
+        
         <div className="flex flex-col items-center mb-6">
           <div className="relative">
             <div
@@ -114,10 +114,10 @@ export const AdminSidebar = () => {
               </div>
             </div>
 
-            {/* Profile Dropdown */}
+           
             {profileMenuOpen && (
               <div className="absolute left-1/2 -translate-x-1/2 top-[70px] w-56 bg-[#1A1A1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
-                {/* User Info Header */}
+               
                 <div className="px-4 py-3 border-b border-white/10 bg-primary/5">
                   <div className="flex items-center gap-3">
                     <div className="relative">
@@ -135,7 +135,7 @@ export const AdminSidebar = () => {
                   </div>
                 </div>
 
-                {/* Menu Options */}
+              
                 <div className="py-1">
                   <button
                     onClick={() => {
@@ -160,7 +160,7 @@ export const AdminSidebar = () => {
                   </button>
                 </div>
 
-                {/* Logout Section */}
+              
                 <div className="border-t border-white/10 py-1">
                   <button
                     onClick={handleLogout}
@@ -193,7 +193,7 @@ export const AdminSidebar = () => {
           </div>
         </div>
 
-        {/* Navigation Links */}
+      
         <div className="w-full flex-1 overflow-y-auto">
           {adminNavlinks.map((link, index) => (
             <NavLink

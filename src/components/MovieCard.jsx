@@ -22,7 +22,7 @@ export const MovieCard = ({ movie }) => {
           alt={movie.title}
           className="h-85 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        {/* Hover Overlay */}
+      
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
           <button
             onClick={(e) => { e.stopPropagation(); handleNavigate(); }}
@@ -32,7 +32,6 @@ export const MovieCard = ({ movie }) => {
           </button>
         </div>
 
-        {/* Rating Badge */}
         <div className="absolute top-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-md rounded-lg flex items-center gap-1 border border-white/10">
           <StarIcon className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
           <span className="text-xs font-bold text-white">{movie.vote_average?.toFixed(1) || 'N/A'}</span>

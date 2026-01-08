@@ -41,7 +41,7 @@ const AdminLogin = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-            {/* Cinematic Background */}
+        
             <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent"></div>
                 <div className="absolute top-0 left-0 w-full h-full opacity-10">
@@ -50,9 +50,9 @@ const AdminLogin = () => {
                 </div>
             </div>
 
-            {/* Content */}
+       
             <div className="relative z-10 w-full max-w-md px-6">
-                {/* Logo */}
+              
                 <div className="text-center mb-8">
                     <Link to="/">
                         <img src={assets.logo} alt="CineVibe Logo" className="w-48 h-auto mx-auto mb-4" />
@@ -61,10 +61,10 @@ const AdminLogin = () => {
                     <p className="text-gray-400">Sign in to access the admin dashboard</p>
                 </div>
 
-                {/* Login Form */}
+               
                 <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl">
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Email Field */}
+                      
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium mb-2">
                                 Admin Email
@@ -81,7 +81,7 @@ const AdminLogin = () => {
                             />
                         </div>
 
-                        {/* Password Field */}
+                      
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium mb-2">
                                 Password
@@ -98,7 +98,7 @@ const AdminLogin = () => {
                             />
                         </div>
 
-                        {/* Submit Button */}
+                      
                         <button
                             type="submit"
                             className="w-full py-3 bg-primary hover:bg-primary-dull transition rounded-lg font-semibold text-white shadow-lg shadow-primary/30 hover:shadow-primary/50 transform hover:scale-[1.02] transition-all duration-200"
@@ -107,7 +107,7 @@ const AdminLogin = () => {
                         </button>
                     </form>
 
-                    {/* User Login Link */}
+                   
                     <p className="mt-6 text-center text-sm text-gray-400">
                         Not an admin?{' '}
                         <Link to="/login" className="text-primary hover:text-primary-dull font-semibold transition">

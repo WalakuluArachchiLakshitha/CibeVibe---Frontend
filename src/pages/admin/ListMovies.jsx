@@ -53,7 +53,7 @@ export const ListMovies = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <Title text1="All" text2="Movies" />
 
-                {/* Search Bar */}
+               
                 <div className="relative">
                     <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
@@ -72,7 +72,7 @@ export const ListMovies = () => {
                         key={movie._id}
                         className="group relative bg-[#1A1A1A] border border-white/5 rounded-xl overflow-hidden hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
                     >
-                        {/* Poster */}
+                       
                         <div className="relative aspect-[2/3] overflow-hidden">
                             <img
                                 src={movie.poster_path}
@@ -80,14 +80,14 @@ export const ListMovies = () => {
                                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             />
 
-                            {/* Rating Badge */}
+                           
                             <div className="absolute top-2 right-2 px-2 py-1 bg-black/60 backdrop-blur-md rounded-lg flex items-center gap-1 border border-white/10">
                                 <StarIcon className="w-3 h-3 text-amber-400 fill-amber-400" />
                                 <span className="text-xs font-bold text-white">{movie.vote_average.toFixed(1)}</span>
                             </div>
                         </div>
 
-                        {/* Content */}
+                        
                         <div className="p-4">
                             <h3 className="font-semibold text-white truncate mb-1" title={movie.title}>{movie.title}</h3>
 
@@ -97,7 +97,7 @@ export const ListMovies = () => {
                                 <span>{timeFormat(movie.runtime)}</span>
                             </div>
 
-                            {/* Actions */}
+                          
                             <div className="flex items-center gap-2 mt-auto">
                                 <button
                                     onClick={() => navigate(`/admin/update-movies/${movie._id}`)}

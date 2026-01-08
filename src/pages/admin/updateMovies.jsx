@@ -31,7 +31,7 @@ export const UpdateMovies = () => {
                     overview: movieToEdit.overview || "",
                     releaseDate: movieToEdit.release_date?.split('T')[0] || '',
                     runtime: movieToEdit.runtime || 0,
-                    genres: movieToEdit.genres?.join(', ') || '', // Backend stores as array
+                    genres: movieToEdit.genres?.join(', ') || '', 
                     languages: movieToEdit.languages?.join(', ') || '',
                     country: movieToEdit.country || '',
                     trailerUrl: movieToEdit.trailer_url || '',
@@ -63,7 +63,7 @@ export const UpdateMovies = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Transform data to match backend expectations
+           
             const apiData = {
                 title: movieData.title,
                 overview: movieData.overview,
@@ -101,7 +101,7 @@ export const UpdateMovies = () => {
             <div className="mt-8 max-w-4xl">
                 <form onSubmit={handleSubmit} className="space-y-6">
 
-                    {/* Title & Rating */}
+                   
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="glass p-1 rounded-lg">
                             <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
@@ -134,7 +134,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Overview */}
+                    
                     <div className="glass p-1 rounded-lg">
                         <div className="flex items-start gap-3 px-4 py-3 bg-black/20 rounded-md">
                             <TextIcon className="text-gray-400 w-5 h-5 mt-1" />
@@ -150,7 +150,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Details Grid */}
+               
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="glass p-1 rounded-lg">
                             <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
@@ -197,7 +197,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Extra Details: Languages & Country */}
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="glass p-1 rounded-lg">
                             <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
@@ -230,7 +230,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Trailer URL */}
+                  
                     <div className="glass p-1 rounded-lg">
                         <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
                             <TextIcon className="text-gray-400 w-5 h-5" />
@@ -245,7 +245,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Poster URL */}
+               
                     <div className="glass p-1 rounded-lg">
                         <div className="flex items-center gap-3 px-4 py-3 bg-black/20 rounded-md">
                             <ImageIcon className="text-gray-400 w-5 h-5" />
@@ -261,7 +261,7 @@ export const UpdateMovies = () => {
                         </div>
                     </div>
 
-                    {/* Preview */}
+                    
                     {movieData.posterPath && (
                         <div className="mt-4">
                             <p className="text-sm text-gray-400 mb-2">Poster Preview:</p>
